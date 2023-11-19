@@ -11,8 +11,13 @@
     <form method="post" action="{{ url_for('login_post') }}">
         <!-- Add your login form fields here -->
         <label for="user_id">User ID:</label>
-        <input type="text" id="user_id" name="user_id" required>
+        <input type="text" id="username" name="username" required>
         <input type="text" id="password" name="password" required>
+        <label for="user_type">User Type:</label>
+        <select id="user_type" name="user_type" required>
+            <option value="CUSTOMER">Customer</option>
+            <option value="SERVICE_PROVIDER">SERVICE_PROVIDER</option>
+        </select>
         <button type="submit">Login</button>
     </form>
     <p><a href="{{ url_for('home') }}">Go back to Home Page</a></p>
