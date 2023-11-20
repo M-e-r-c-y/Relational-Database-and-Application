@@ -1,5 +1,4 @@
 <?php
-
 include 'config.php';
 
 // Check if the user is logged in as an admin
@@ -9,148 +8,137 @@ if (!isset($_SESSION['admin_id'])) {
     exit();
 }
 
-// Admin page content
+// Fetch data from the Machine table
+$machineQuery = "SELECT * FROM Machine";
+$machineResult = $conn->query($machineQuery);
+$machineData = $machineResult->fetchAll(PDO::FETCH_ASSOC);
+
+// Fetch data from the SparePart table
+$sparePartQuery = "SELECT * FROM SparePart";
+$sparePartResult = $conn->query($sparePartQuery);
+$sparePartData = $sparePartResult->fetchAll(PDO::FETCH_ASSOC);
+
+// Fetch data from the Maintenance table
+$maintenanceQuery = "SELECT * FROM Maintenance";
+$maintenanceResult = $conn->query($maintenanceQuery);
+$maintenanceData = $maintenanceResult->fetchAll(PDO::FETCH_ASSOC);
+
+// Fetch data from the Repair table
+$repairQuery = "SELECT * FROM Repair";
+$repairResult = $conn->query($repairQuery);
+$repairData = $repairResult->fetchAll(PDO::FETCH_ASSOC);
+
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Page</title>
+    <title>Admin Dashboard</title>
 
-    <!-- font awesome cdn link  -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <!-- Add your CSS links here -->
 
-    <!-- custom css file link  -->
-    <link rel="stylesheet" href="css/components.css">
-
-    <style>
-        /* Add any additional styles for the admin page here */
-        /* For example, styling for the navigation menu */
-        .admin-nav {
-            background-color: #333;
-            overflow: hidden;
-        }
-
-        .admin-nav a {
-            float: left;
-            display: block;
-            color: #f2f2f2;
-            text-align: center;
-            padding: 14px 16px;
-            text-decoration: none;
-        }
-
-        .admin-nav a:hover {
-            background-color: #ddd;
-            color: black;
-        }
-    </style>
 </head>
-<body style="background-image: url('images/admin_back.jpg');">
+<body>
 
-<?php
-// Display any messages (e.g., success messages or errors)
-if (isset($message)) {
-    foreach ($message as $message) {
-        echo '
-        <div class="message">
-            <span>' . $message . '</span>
-            <i class="fas fa-times" onclick="this.parentElement.remove();"></i>
-        </div>
-        ';
-    }
-}
-?>
+<!-- Add your HTML and PHP code to display data here -->
 
-<!-- Admin Navigation Menu -->
-<div class="admin-nav">
-    <a href="#maintenanceTasks">Maintenance Tasks</a>
-    <a href="#repairs">Repairs</a>
-    <a href="#customers">Customers</a>
-    <a href="#machines">Machines</a>
-    <a href="logout.php" style="float: right;">Logout</a>
-</div>
+<h1>Welcome to the Admin Dashboard</h1>
 
-<!-- Content Sections -->
-<section id="maintenanceTasks">
-    <h2>Maintenance Task Table</h2>
-    <?php
-    // SQL query to create MaintenanceTask table
-    $maintenanceTaskQuery = "
-        CREATE TABLE MaintenanceTask (
-            TaskID INT PRIMARY KEY,
-            MachineID INT,
-            TechnicianID INT,
-            Description TEXT,
-            TaskDate DATE,
-            Status VARCHAR(50),
-            FOREIGN KEY (MachineID) REFERENCES Machine(MachineID),
-            FOREIGN KEY (TechnicianID) REFERENCES Technician(TechnicianID)
-        );
-    ";
-    $conn->exec($maintenanceTaskQuery);
-    echo "MaintenanceTask table created successfully.";
-    ?>
-</section>
-
-<section id="repairs">
-    <h2>Repair Table</h2>
-    <?php
-    // SQL query to create Repair table
-    $repairQuery = "
-        CREATE TABLE Repair (
-            RepairID INT PRIMARY KEY,
-            MachineID INT REFERENCES Machine(MachineID),
-            IssueDescription TEXT,
-            RepairDate DATE,
-            Details TEXT
-        );
-    ";
-    $conn->exec($repairQuery);
-    echo "Repair table created successfully.";
-    ?>
-</section>
-
-<section id="customers">
-    <h2>Customer Table</h2>
-    <?php
-    // SQL query to create Customer table
-    $customerQuery = "
-        CREATE TABLE Customer (
-            CustomerID INT PRIMARY KEY,
-            ContactInformation TEXT,
-            MachinesOwned TEXT,
-            PurchaseHistory TEXT,
-            WarrantyInformation TEXT,
-            PasswordHash VARCHAR(255),
-            Salt VARCHAR(50)
-        );
-    ";
-    $conn->exec($customerQuery);
-    echo "Customer table created successfully.";
-    ?>
-</section>
-
-<section id="machines">
+<!-- Display Machine data -->
+<section>
     <h2>Machine Table</h2>
-    <?php
-    // SQL query to create Machine table
-    $machineQuery = "
-        CREATE TABLE Machine (
-            MachineID INT PRIMARY KEY,
-            Model VARCHAR(255),
-            Specifications TEXT,
-            PurchaseDate DATE,
-            WarrantyDetails TEXT,
-            ServiceHistory TEXT,
-            MaintenanceSchedules TEXT
-        );
-    ";
-    $conn->exec($machineQuery);
-    echo "Machine table created successfully.";
-    ?>
+    <table border="1">
+        <tr>
+            <th>MachineID</th>
+            <th>Model</th>
+            <th>Specifications</th>
+            <th>PurchaseDate</th>
+            <th>WarrantyDetails</th>
+        </tr>
+        <?php foreach ($machineData as $machineRow): ?>
+            <tr>
+                <td><?php echo $machineRow['MachineID']; ?></td>
+                <td><?php echo $machineRow['Model']; ?></td>
+                <td><?php echo $machineRow['Specifications']; ?></td>
+                <td><?php echo $machineRow['PurchaseDate']; ?></td>
+                <td><?php echo $machineRow['WarrantyDetails']; ?></td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
+</section>
+
+<!-- Display SparePart data -->
+<section>
+    <h2>SparePart Table</h2>
+    <table border="1">
+        <tr>
+            <th>PartNumber</th>
+            <th>Description</th>
+            <th>QuantityAvailable</th>
+            <th>SupplierDetails</th>
+            <th>Price</th>
+            <th>UsageHistory</th>
+        </tr>
+        <?php foreach ($sparePartData as $sparePartRow): ?>
+            <tr>
+                <td><?php echo $sparePartRow['PartNumber']; ?></td>
+                <td><?php echo $sparePartRow['Description']; ?></td>
+                <td><?php echo $sparePartRow['QuantityAvailable']; ?></td>
+                <td><?php echo $sparePartRow['SupplierDetails']; ?></td>
+                <td><?php echo $sparePartRow['Price']; ?></td>
+                <td><?php echo $sparePartRow['UsageHistory']; ?></td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
+</section>
+
+<!-- Display Maintenance data -->
+<section>
+    <h2>Maintenance Table</h2>
+    <table border="1">
+        <tr>
+            <th>MaintenanceID</th>
+            <th>MachineID</th>
+            <th>MaintenanceType</th>
+            <th>MaintenanceDate</th>
+            <th>Details</th>
+        </tr>
+        <?php foreach ($maintenanceData as $maintenanceRow): ?>
+            <tr>
+                <td><?php echo $maintenanceRow['MaintenanceID']; ?></td>
+                <td><?php echo $maintenanceRow['MachineID']; ?></td>
+                <td><?php echo $maintenanceRow['MaintenanceType']; ?></td>
+                <td><?php echo $maintenanceRow['MaintenanceDate']; ?></td>
+                <td><?php echo $maintenanceRow['Details']; ?></td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
+</section>
+
+<!-- Display Repair data -->
+<section>
+    <h2>Repair Table</h2>
+    <table border="1">
+        <tr>
+            <th>RepairID</th>
+            <th>MachineID</th>
+            <th>IssueDescription</th>
+            <th>RepairDate</th>
+            <th>Details</th>
+        </tr>
+        <?php foreach ($repairData as $repairRow): ?>
+            <tr>
+                <td><?php echo $repairRow['RepairID']; ?></td>
+                <td><?php echo $repairRow['MachineID']; ?></td>
+                <td><?php echo $repairRow['IssueDescription']; ?></td>
+                <td><?php echo $repairRow['RepairDate']; ?></td>
+                <td><?php echo $repairRow['Details']; ?></td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
 </section>
 
 </body>
