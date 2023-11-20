@@ -6,7 +6,9 @@
             == we access database via log in page
 - home.php == after loging in, users (customers) will be directed to this page
 -     orders.php == this is the page where customer views their purchase history
--     contact.php == this is the page where customers can send a service request 
+-     contact.php == this is the page where customers can send a service request
+-     logout.php == lets customers logout of home page and get directed to login page.
+-     about.php == a page with information about our company
 - admin_page.php == after login, admins will be directed to this page
 - header.php == includes design of the header of webpage (includes buttons, links to other pages etc...)
 
