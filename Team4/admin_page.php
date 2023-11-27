@@ -33,7 +33,7 @@ if(!isset($admin_id)){
 
    <div class="box-container">
 
-<?php /* Create link to produc page*/ ?>
+<?php /* Create link to product page*/ ?>
      <div class="box">
      <?php
         $select_products = $conn->prepare("SELECT * FROM `products`");
@@ -76,7 +76,7 @@ if(!isset($admin_id)){
       <a href="admin_orders.php" class="btn">Sales Record</a>
       </div>
 
-<?php /* link to Servise request page*/ ?>
+<?php /* link to Service request page*/ ?>
       <div class="box">
       <?php
          $select_messages = $conn->prepare("SELECT * FROM `message`");
@@ -113,23 +113,35 @@ if(!isset($admin_id)){
            </div>
            */ ?>
 
-<?php /* Repare and Maintenance*/ ?>
+<?php /* link to Repair page*/ ?>
       <div class="box">
+      <?php
+         $select_messages = $conn->prepare("SELECT * FROM `repair`");
+         $select_messages->execute();
+         $number_of_messages = $select_messages->rowCount();
+      ?>
       <h3><i class="fa-regular fa-thumbs-up"></i></h3>
       <p><b style="color:Tomato;">Manage </b>Repairs</p>
-      <a href="" class="btn">Repairs</a>
+      <a href="admin_repair.php" class="btn">Repairs</a>
       </div>
-
+      
+<?php /* link to Maintenance page*/ ?>      
       <div class="box">
+      <?php
+         $select_messages = $conn->prepare("SELECT * FROM `repair`");
+         $select_messages->execute();
+         $number_of_messages = $select_messages->rowCount();
+      ?>
       <h3><i class="fa-regular fa-bell"></i></h3>
       <p><b style="color:Tomato;">Manage </b>Maintenance</p>
-      <a href="" class="btn">Maintenance</a>
+      <a href="admin_maintenance.php" class="btn">Maintenance</a>
       </div>
+      
+      
 
 
 
    </div>
-
 </section>
 
 

@@ -59,3 +59,33 @@ CREATE TABLE `message` (
   `number` varchar(12) NOT NULL,
   `message` varchar(500) NOT NULL
 ) ;
+
+CREATE TABLE `repair` LIKE `message`;
+
+ALTER TABLE `repair`
+ADD COLUMN `status` VARCHAR(20) NOT NULL DEFAULT 'Pending';
+
+-- Create a trigger BEFORE INSERT on the `message` table
+DELIMITER //
+CREATE TRIGGER before_message_insert
+BEFORE INSERT ON `message`
+FOR EACH ROW
+BEGIN
+  -- Insert a corresponding record into the `repair` table
+  INSERT INTO `repair` (id, user_id, name, email, number, message, status)
+  VALUES (NEW.id, NEW.user_id, NEW.name, NEW.email, NEW.number, NEW.message, 'Pending');
+END;
+//
+DELIMITER ;
+
+-- Create a trigger AFTER DELETE on the `repair` table
+DELIMITER //
+CREATE TRIGGER after_repair_delete
+AFTER DELETE ON `repair`
+FOR EACH ROW
+BEGIN
+  -- Delete the corresponding record from the `message` table
+  DELETE FROM `message` WHERE id = OLD.id;
+END;
+//
+DELIMITER ;
