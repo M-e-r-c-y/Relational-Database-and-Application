@@ -28,8 +28,16 @@ if(isset($message)){
 
       <div class="icons">
          <div id="menu-btn" class="fas fa-bars"></div>
-         <div id="user-btn" class="fas fa-user"></div>
-
+         <div id="user-btn" class="fas fa-user" >
+            <a href="user_profile_update.php">
+               <?php 
+               $select_profile = $conn->prepare("SELECT * FROM `users` WHERE id = ?");
+               $select_profile->execute([$user_id]);
+               $fetch_profile = $select_profile->fetch(PDO::FETCH_ASSOC);
+               echo $fetch_profile['name']; 
+               ?>
+            </a>
+         </div>
 
       </div>
 
