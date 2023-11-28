@@ -1,5 +1,7 @@
+<?php/*"SJSU CMPE 138 FALL 2023 TEAM4"*/?>
+
 <footer class="footer">
-   /*"SJSU CMPE 138 FALL 2023 TEAM4"*/
+
 
    <section class="box-container">
 
