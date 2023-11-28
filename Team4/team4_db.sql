@@ -36,7 +36,6 @@ CREATE TABLE `cart` (
 ) ;
 ALTER TABLE `cart` MODIFY id INT PRIMARY KEY NOT NULL AUTO_INCREMENT, AUTO_INCREMENT = 1;
 
-
 CREATE TABLE `orders` (
   `id` int(100) NOT NULL,
   `user_id` int(100) NOT NULL,
@@ -48,7 +47,8 @@ CREATE TABLE `orders` (
   `total_products` varchar(1000) NOT NULL,
   `total_price` int(100) NOT NULL,
   `placed_on` varchar(50) NOT NULL,
-  `payment_status` varchar(20) NOT NULL DEFAULT 'pending'
+  `payment_status` varchar(20) NOT NULL DEFAULT 'pending',
+  FOREIGN KEY (`id`) REFERENCES `products`(`id`)
 );
 
 CREATE TABLE `message` (
