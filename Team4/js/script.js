@@ -1,3 +1,4 @@
+/*"SJSU CMPE 138 FALL 2023 TEAM4"*/
 let navbar = document.querySelector('.header .flex .navbar');
 
 document.querySelector('#menu-btn').onclick = () =>{
