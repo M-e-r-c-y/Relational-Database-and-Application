@@ -56,7 +56,7 @@ if(isset($_POST['submit'])){
    <link rel="stylesheet" href="css/components.css">
 
 </head>
-<body style="background-image: url('lregback.jpg');">
+<body style="background-image: url('images/lregback.jpg');">
 
 <?php
 
