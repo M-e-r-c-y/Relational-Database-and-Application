@@ -77,6 +77,7 @@ if(!isset($user_id)){
          <h3>Service Request</h3>
          <p>Need assistance? Our Service Request option is your direct line to expert support.</p>
          <a href="contact.php" class="btn">Request Service</a>
+         <a href="check_status.php" class="btn">Check Status</a>
       </div>
 
 
