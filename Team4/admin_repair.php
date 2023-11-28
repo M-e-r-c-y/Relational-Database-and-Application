@@ -78,7 +78,7 @@ if(isset($_GET['delete'])){
             </select>
             <div class="flex-btn">
                <input type="submit" name="update_repair" class="option-btn" value="update">
-               <a href="admin_repair.php?delete=<?= $fetch_repair['status']; ?>" class="delete-btn" onclick="return confirm('delete this repair?');">delete</a>
+               <a href="admin_repair.php?delete=<?= $fetch_repair['id']; ?>" class="delete-btn" onclick="return confirm('delete this repair?');">delete</a>
             </div>
         </form>
    </div>

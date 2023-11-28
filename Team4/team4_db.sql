@@ -15,7 +15,7 @@ ALTER TABLE users MODIFY user_type enum('user','admin') NOT NULL DEFAULT 'user' 
 */
 ALTER TABLE users MODIFY id INT PRIMARY KEY NOT NULL AUTO_INCREMENT, AUTO_INCREMENT = 1;
 
-CREATE TABLE products (
+CREATE TABLE `products` (
   `id` INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   `category` varchar(20) NOT NULL,
@@ -64,6 +64,16 @@ CREATE TABLE `repair` LIKE `message`;
 
 ALTER TABLE `repair`
 ADD COLUMN `status` VARCHAR(20) NOT NULL DEFAULT 'Pending';
+
+CREATE TABLE `maintenance` (
+    `MaintenanceID` INT PRIMARY KEY,
+    `id` INT,
+    `MaintenanceType` VARCHAR(255),
+    `LastMaintenanceDate` DATE,
+    `NextMaintenanceDate` DATE,
+    `Details` TEXT,
+    FOREIGN KEY (`id`) REFERENCES `products`(`id`)
+);
 
 -- Create a trigger BEFORE INSERT on the `message` table
 DELIMITER //

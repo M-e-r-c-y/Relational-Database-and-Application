@@ -20,6 +20,9 @@ if(isset($_POST['submit'])){
    $image_tmp_name = $_FILES['image']['tmp_name'];
    $image_folder = 'images/'.$image;
 
+   $user_type = $_POST['user_type'];
+   $user_type = filter_var($user_type, FILTER_SANITIZE_STRING);
+
    $select = $conn->prepare("SELECT * FROM `users` WHERE email = ?");
    $select->execute([$email]);
 
@@ -29,8 +32,8 @@ if(isset($_POST['submit'])){
       if($pass != $cpass){
          $message[] = 'confirm password not matched!';
       }else{
-         $insert = $conn->prepare("INSERT INTO `users`(name, email, password, image) VALUES(?,?,?,?)");
-         $insert->execute([$name, $email, $pass, $image]);
+         $insert = $conn->prepare("INSERT INTO `users`(name, email, password, image, user_type) VALUES(?,?,?,?,?)");
+         $insert->execute([$name, $email, $pass, $image, $user_type]);
 
          if($insert){
             if($image_size > 2000000){
@@ -90,11 +93,11 @@ if(isset($message)){
       <input type="email" name="email" class="box" placeholder="enter your email" required>
       <input type="password" name="pass" class="box" placeholder="enter your password" required>
       <input type="password" name="cpass" class="box" placeholder="confirm your password" required>
-
-
-
-      </select>
       <input type="file" name="image" class="box" required accept="image/jpg, image/jpeg, image/png">
+      <select name="user_type" class="box" required>
+         <option value="user" selected>User</option>
+         <option value="admin">Admin</option>
+      </select>
       <input type="submit" value="register now" class="btn" name="submit">
       <p>already have an account? <a href="login.php">login now</a></p>
    </form>
