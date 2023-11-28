@@ -1,3 +1,4 @@
+/*"SJSU CMPE 138 FALL 2023 TEAM4"*/
 /*DROP DATABASE team4_db;*/
 CREATE DATABASE team4_db;
 USE team4_db;
